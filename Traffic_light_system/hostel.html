@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hostel Management System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-100 antialiased">
+
+    <!-- Main Container -->
+    <div id="app" class="min-h-screen">
+
+        <!-- Login Screen -->
+        <div id="login-screen" class="flex items-center justify-center min-h-screen bg-gray-200">
+            <div class="w-full max-w-md p-8 space-y-8 bg-white rounded-2xl shadow-lg">
+                <div class="text-center">
+                    <h2 class="mt-6 text-3xl font-bold text-gray-900">
+                        Hostel Complaint Portal
+                    </h2>
+                    <p class="mt-2 text-sm text-gray-600">Sign in to your account</p>
+                </div>
+                <form id="login-form" class="mt-8 space-y-6">
+                    <div class="space-y-4">
+                         <div>
+                            <label for="username" class="sr-only">Username</label>
+                            <input id="username" name="username" type="text" required class="relative block w-full px-3 py-3 text-gray-900 placeholder-gray-500 bg-gray-100 border border-gray-300 rounded-md appearance-none focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Username (e.g., stud1, warden1)">
+                        </div>
+                        <div>
+                            <label for="password" class="sr-only">Password</label>
+                            <input id="password" name="password" type="password" required class="relative block w-full px-3 py-3 text-gray-900 placeholder-gray-500 bg-gray-100 border border-gray-300 rounded-md appearance-none focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Password (e.g., 123)">
+                        </div>
+                    </div>
+                     <p id="login-error" class="text-sm text-red-600 text-center hidden">Invalid credentials. Please try again.</p>
+                    <div>
+                        <button type="submit" class="group relative flex justify-center w-full px-4 py-3 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                            Sign in
+                        </button>
+                    </div>
+                </form>
+                 <div class="text-xs text-center text-gray-500 bg-gray-50 p-3 rounded-lg">
+                    <p class="font-semibold">Demo Credentials:</p>
+                    <p><b>Student:</b> stud1 / 123</p>
+                    <p><b>Warden:</b> warden1 / 123</p>
+                    <p><b>Maintenance:</b> maint1 / 123</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main App View (hidden initially) -->
+        <div id="app-view" class="hidden">
+            <!-- Header -->
+            <header class="bg-white shadow-md">
+                <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+                    <h1 class="text-xl font-bold text-indigo-600">Hostel Management</h1>
+                    <div class="flex items-center space-x-4">
+                        <span class="text-gray-700">Welcome, <span id="user-name" class="font-semibold"></span>!</span>
+                        <button id="logout-btn" class="px-4 py-2 text-sm font-medium text-white bg-indigo-500 rounded-md hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Logout</button>
+                    </div>
+                </nav>
+            </header>
+
+            <!-- Main Content -->
+            <main class="container mx-auto p-6">
+                <!-- Student Dashboard -->
+                <div id="student-dashboard" class="hidden space-y-6">
+                    <!-- Announcements -->
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4">Announcements</h2>
+                        <div id="student-announcements" class="space-y-4 max-h-48 overflow-y-auto"></div>
+                    </div>
+                    <!-- My Complaints -->
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <div class="flex justify-between items-center mb-4">
+                            <h2 class="text-2xl font-bold text-gray-800">My Complaints</h2>
+                            <button id="new-complaint-btn" class="px-4 py-2 font-medium text-white bg-green-500 rounded-md hover:bg-green-600">File New Complaint</button>
+                        </div>
+                        <div id="student-complaints" class="space-y-4"></div>
+                    </div>
+                </div>
+
+                <!-- Warden Dashboard -->
+                <div id="warden-dashboard" class="hidden space-y-6">
+                     <div class="bg-white p-6 rounded-lg shadow">
+                        <div class="flex justify-between items-center mb-4">
+                            <h2 class="text-2xl font-bold text-gray-800">Announcements</h2>
+                            <button id="new-announcement-btn" class="px-4 py-2 font-medium text-white bg-green-500 rounded-md hover:bg-green-600">Post Announcement</button>
+                        </div>
+                        <div id="warden-announcements" class="space-y-4 max-h-48 overflow-y-auto"></div>
+                    </div>
+                     <div class="bg-white p-6 rounded-lg shadow">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4">All Complaints</h2>
+                        <div id="warden-complaints" class="space-y-4"></div>
+                    </div>
+                </div>
+
+                <!-- Maintenance Dashboard -->
+                <div id="maintenance-dashboard" class="hidden space-y-6">
+                     <div class="bg-white p-6 rounded-lg shadow">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4">Assigned Tasks</h2>
+                        <div id="maintenance-tasks" class="space-y-4"></div>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+    </div>
+
+    <!-- New Complaint Modal -->
+    <div id="complaint-modal" class="modal fixed inset-0 z-50 items-center justify-center bg-black bg-opacity-50">
+        <div class="bg-white rounded-lg shadow-xl p-8 w-full max-w-lg">
+            <h3 class="text-2xl font-bold mb-6">File a New Complaint</h3>
+            <form id="complaint-form" class="space-y-4">
+                <div>
+                    <label for="complaint-room" class="block text-sm font-medium text-gray-700">Room Number</label>
+                    <input type="text" id="complaint-room" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                </div>
+                <div>
+                    <label for="complaint-category" class="block text-sm font-medium text-gray-700">Category</label>
+                    <select id="complaint-category" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        <option>Electrical</option>
+                        <option>Plumbing</option>
+                        <option>Carpentry</option>
+                        <option>Internet</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="complaint-description" class="block text-sm font-medium text-gray-700">Description</label>
+                    <textarea id="complaint-description" rows="3" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></textarea>
+                </div>
+                <div class="flex justify-end space-x-4 pt-4">
+                    <button type="button" id="cancel-complaint-btn" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300">Cancel</button>
+                    <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- New Announcement Modal -->
+    <div id="announcement-modal" class="modal fixed inset-0 z-50 items-center justify-center bg-black bg-opacity-50">
+        <div class="bg-white rounded-lg shadow-xl p-8 w-full max-w-lg">
+            <h3 class="text-2xl font-bold mb-6">Post a New Announcement</h3>
+            <form id="announcement-form" class="space-y-4">
+                 <div>
+                    <label for="announcement-text" class="block text-sm font-medium text-gray-700">Announcement Text</label>
+                    <textarea id="announcement-text" rows="4" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></textarea>
+                </div>
+                <div class="flex justify-end space-x-4 pt-4">
+                    <button type="button" id="cancel-announcement-btn" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300">Cancel</button>
+                    <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">Post</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

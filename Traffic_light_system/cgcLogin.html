@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+        #login-view {
+            background-image: url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+        }
+        .translucent-card {
+            background-color: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            --webkit-backdrop-filter: blur(12px);
+            transition: all 0.3s ease;
+        }
+        #dashboard-header {
+             background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1607237138185-e8945ab4c632?q=80&w=2070&auto=format&fit=crop');
+             background-size: cover;
+             background-position: center;
+        }
+        .nav-item, .nav-item-button, .dropdown-menu a {
+            transition: all 0.2s ease-in-out;
+        }
+        .nav-active {
+            background-color: #DC2626; /* red-600 */
+            color: white !important;
+            box-shadow: 0 4px 6px -1px rgba(220, 38, 38, 0.3), 0 2px 4px -1px rgba(220, 38, 38, 0.1);
+        }
+        .dashboard-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+        }
+        
+        /* Animation for content switching */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in {
+            animation: fadeIn 0.4s ease-in-out forwards;
+        }
+
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Login View -->
+    <div id="login-view" class="min-h-screen flex flex-col items-center justify-center p-4">
+        <div class="absolute top-6 left-6 md:top-8 md:left-8 text-white text-3xl font-bold tracking-wider" style="text-shadow: 1px 1px 4px rgba(0,0,0,0.4);">
+            uniRP™
+        </div>
+        <div class="w-full flex justify-center md:justify-start md:ml-[5vw] lg:ml-[10vw]">
+            <div class="translucent-card w-full max-w-md p-8 md:p-10 space-y-6 rounded-2xl shadow-2xl">
+                <div class="flex items-center space-x-3">
+                     <img src="https://www.cgc.edu.in/public/logo/logo-cgc-landran.png" alt="CGC University Logo" class="h-14">
+                </div>
+                <div>
+                    <h2 class="text-4xl font-extrabold text-red-900">Login</h2>
+                    <p class="mt-2 text-gray-600">Welcome back! Please enter your details.</p>
+                </div>
+                <form id="login-form" class="space-y-6" action="#" method="POST">
+                    <div>
+                        <label for="user-id" class="sr-only">Roll Number / Enrollment No / Employee Code</label>
+                        <input id="user-id" name="user-id" type="text" required class="appearance-none rounded-lg relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-red-800 focus:border-red-800 sm:text-sm transition-shadow">
+                    </div>
+                    <div class="relative">
+                        <label for="password" class="sr-only">Password</label>
+                        <input id="password" name="password" type="password" autocomplete="current-password" required class="appearance-none rounded-lg relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-red-800 focus:border-red-800 sm:text-sm transition-shadow">
+                        <button type="button" id="toggle-password" class="absolute inset-y-0 right-0 px-3 flex items-center text-gray-500 hover:text-gray-700">
+                           <svg id="eye-icon" class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                           <svg id="eye-off-icon" class="h-5 w-5 hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.243 4.243l-4.243-4.243" /></svg>
+                        </button>
+                    </div>
+                    <div class="text-right">
+                        <a href="#" class="text-sm font-medium text-gray-600 hover:text-red-800 hover:underline">
+                            Forgot Password?
+                        </a>
+                    </div>
+                    <div>
+                        <button type="submit" class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-base font-semibold rounded-lg text-white bg-red-800 hover:bg-red-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-900 transition-all duration-300 ease-in-out transform hover:scale-105">
+                            Login
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard View -->
+    <div id="dashboard-view" class="min-h-screen hidden bg-gray-50">
+        <!-- Header -->
+        <header id="dashboard-header" class="relative shadow-lg">
+            <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between h-32">
+                    <div class="flex-shrink-0">
+                         <img src="https://www.cgc.edu.in/public/logo/logo-cgc-landran-white.png" alt="CGC University Logo" class="h-16">
+                    </div>
+                    <div class="flex items-center space-x-4 text-white">
+                        <div class="relative flex items-center">
+                            <input id="search-bar" type="text" placeholder="Search..." class="w-0 bg-white/20 text-white placeholder-gray-300 rounded-full py-2 px-0 focus:outline-none focus:ring-2 focus:ring-white transition-all duration-300 ease-in-out">
+                            <button id="search-button" class="p-2 rounded-full hover:bg-white/20 focus:outline-none transition-colors">
+                                <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" /></svg>
+                            </button>
+                        </div>
+                        <button class="p-2 rounded-full hover:bg-white/20 transition-colors">
+                            <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" /></svg>
+                        </button>
+                        <button id="logout-button" class="p-2 rounded-full hover:bg-white/20 transition-colors flex items-center space-x-2">
+                             <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" /></svg>
+                             <span class="text-sm font-medium">Logout</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+        
+        <!-- Navigation Bar -->
+        <nav class="bg-white shadow-md sticky top-0 z-20">
+            <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div id="nav-container" class="flex items-center justify-start h-16 space-x-2">
+                    <a href="#" data-target="dashboard-content" class="nav-clickable nav-item px-4 py-2 text-sm font-medium rounded-md nav-active flex items-center space-x-2"><svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" /></svg><span>Dashboard</span></a>
+                    <a href="#" data-target="academic-content" class="nav-clickable nav-item px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-md flex items-center space-x-2"><svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 16c1.255 0 2.443-.29 3.5-.804V4.804zM14.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 0114.5 16c1.255 0 2.443-.29 3.5.804v-10A7.968 7.968 0 0014.5 4z" /></svg><span>Academic</span></a>
+                    <a href="#" data-target="notices-content" class="nav-clickable nav-item px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-md flex items-center space-x-2"><svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd" /></svg><span>Notices</span></a>
+                    
+                    <div class="relative nav-item-dropdown">
+                        <button class="nav-item-button px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-md w-full flex items-center space-x-2"><span>Exam</span><svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg></button>
+                        <div class="dropdown-menu hidden absolute z-30 mt-2 w-56 bg-white text-gray-800 rounded-md shadow-lg border border-gray-100">
+                            <a href="#" data-target="final-exam-reg-content" class="nav-clickable block px-4 py-3 text-sm hover:bg-red-500 hover:text-white">Final Exam Registration</a>
+                            <a href="#" data-target="reappear-exam-reg-content" class="nav-clickable block px-4 py-3 text-sm hover:bg-red-500 hover:text-white">Reappear Exam Registration</a>
+                            <a href="#" data-target="hall-ticket-content" class="nav-clickable block px-4 py-3 text-sm hover:bg-red-500 hover:text-white">Up-Coming Exam / Hall Ticket</a>
+                            <a href="#" data-target="internal-result-content" class="nav-clickable block px-4 py-3 text-sm hover:bg-red-500 hover:text-white">MST - Internal Result</a>
+                            <a href="#" data-target="provisional-result-content" class="nav-clickable block px-4 py-3 text-sm hover:bg-red-500 hover:text-white">Final provisional Result</a>
+                            <a href="#" data-target="exam-notice-board-content" class="nav-clickable block px-4 py-3 text-sm hover:bg-red-500 hover:text-white">Exam Notice Board</a>
+                        </div>
+                    </div>
+
+                    <div class="relative nav-item-dropdown">
+                        <button class="nav-item-button px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-md w-full flex items-center space-x-2"><span>Time Table</span> <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg></button>
+                        <div class="dropdown-menu hidden absolute z-30 mt-2 w-56 bg-white text-gray-800 rounded-md shadow-lg border border-gray-100">
+                            <a href="#" data-target="current-week-tt-content" class="nav-clickable block px-4 py-3 text-sm hover:bg-red-500 hover:text-white">Current Week Time-Table</a>
+                            <a href="#" data-target="date-wise-tt-content" class="nav-clickable block px-4 py-3 text-sm hover:bg-red-500 hover:text-white">Date Wise Time Table</a>
+                        </div>
+                    </div>
+
+                    <a href="#" data-target="e-content-content" class="nav-clickable nav-item px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-md">E-Content</a>
+                    <a href="#" data-target="fees-content" class="nav-clickable nav-item px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-md">Fees</a>
+                    <a href="#" data-target="library-content" class="nav-clickable nav-item px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-md">Library</a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="py-10">
+            <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div id="dashboard-content" class="page-content fade-in">
+                    <div class="mb-8"><h1 class="text-3xl font-bold text-gray-800 border-b-4 border-red-500 inline-block pb-2">Current Activity</h1></div>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <div class="bg-white rounded-lg overflow-hidden shadow-lg dashboard-card">
+                            <div class="bg-red-500 text-white p-5 flex items-center justify-between"><h3 class="text-xl font-bold">Notices</h3><svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 01-2.25 2.25H6.75A2.25 2.25 0 014.5 18V7.5c0-.621.504-1.125 1.125-1.125H9.75v-1.5a1.5 1.5 0 011.5-1.5h1.5a1.5 1.5 0 011.5 1.5v1.5z" /></svg></div>
+                            <div class="p-6 space-y-4">
+                                <div class="flex items-center space-x-4">
+                                    <div class="flex-shrink-0 text-center bg-red-50 p-3 rounded-lg"><span class="block text-3xl font-bold text-red-600">15</span><span class="block text-xs font-semibold text-gray-600">Oct 2025</span></div>
+                                    <div><p class="font-semibold text-gray-800 hover:text-red-600 cursor-pointer">REAPPEAR EXAM FORM FILLING NOTIFICATION</p><p class="text-sm text-gray-500">The portal for reappear form filling is now open.</p></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-gray-800 text-white rounded-lg overflow-hidden shadow-lg dashboard-card">
+                             <div class="p-5 flex items-center justify-between"><h3 class="text-xl font-bold">New Uploads</h3><svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z" /></svg></div>
+                            <div class="p-6 space-y-4">
+                                <div class="flex items-center space-x-4">
+                                    <div class="flex-shrink-0 text-center bg-gray-700 p-3 rounded-lg"><span class="block text-3xl font-bold text-white">21</span><span class="block text-xs font-semibold text-gray-400">Sep 2025</span></div>
+                                    <div><p class="font-semibold hover:text-red-400 cursor-pointer">QUANTITATIVE APTITUDE & LOGICAL REASONING</p><p class="text-sm text-gray-400">E-Book uploaded for B.Tech 3rd Sem.</p></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="academic-content" class="page-content hidden"><h2 class="text-3xl font-bold text-gray-800">Academic Information</h2><p class="mt-4 text-gray-600">Details about your courses, attendance, and grades will appear here.</p></div>
+                <div id="notices-content" class="page-content hidden"><h2 class="text-3xl font-bold text-gray-800">University Notices</h2><p class="mt-4 text-gray-600">All official circulars and notices will be listed on this page.</p></div>
+                <div id="final-exam-reg-content" class="page-content hidden"><h2 class="text-3xl font-bold text-gray-800">Final Exam Registration</h2><p class="mt-4 text-gray-600">The portal for final exam registration is currently closed. It will open as per the academic calendar.</p></div>
+                <div id="reappear-exam-reg-content" class="page-content hidden"><h2 class="text-3xl font-bold text-gray-800">Reappear Exam Registration</h2><p class="mt-4 text-gray-600">Use this section to register for reappear examinations.</p></div>
+                <div id="hall-ticket-content" class="page-content hidden"><h2 class="text-3xl font-bold text-gray-800">Hall Ticket Download</h2><p class="mt-4 text-gray-600">Your hall ticket for the upcoming exams will be available for download here.</p></div>
+                <div id="internal-result-content" class="page-content hidden"><h2 class="text-3xl font-bold text-gray-800">MST - Internal Result</h2><p class="mt-4 text-gray-600">View your Mid-Semester Test (MST) and other internal assessment results.</p></div>
+                <div id="provisional-result-content" class="page-content hidden"><h2 class="text-3xl font-bold text-gray-800">Final Provisional Result</h2><p class="mt-4 text-gray-600">Check your final provisional results for the semester here.</p></div>
+                <div id="exam-notice-board-content" class="page-content hidden"><h2 class="text-3xl font-bold text-gray-800">Exam Notice Board</h2><p class="mt-4 text-gray-600">Important notices and updates regarding examinations.</p></div>
+                <div id="current-week-tt-content" class="page-content hidden"><h2 class="text-3xl font-bold text-gray-800">Current Week Time-Table</h2><p class="mt-4 text-gray-600">Your class schedule for the current week is displayed here.</p></div>
+                <div id="date-wise-tt-content" class="page-content hidden"><h2 class="text-3xl font-bold text-gray-800">Date Wise Time Table</h2><p class="mt-4 text-gray-600">Search for the time table for a specific date.</p></div>
+                <div id="e-content-content" class="page-content hidden"><h2 class="text-3xl font-bold text-gray-800">E-Content</h2><p class="mt-4 text-gray-600">Access study materials, lecture notes, and other e-content provided by your faculty.</p></div>
+                <div id="fees-content" class="page-content hidden"><h2 class="text-3xl font-bold text-gray-800">Fees Payment</h2><p class="mt-4 text-gray-600">View your fee details and make payments through this portal.</p></div>
+                <div id="library-content" class="page-content hidden"><h2 class="text-3xl font-bold text-gray-800">Library Information</h2><p class="mt-4 text-gray-600">Check your library account, issued books, and search the university catalog.</p></div>
+            </div>
+        </main>
+
+        <footer class="bg-white mt-12 py-6 border-t">
+            <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-500 text-sm">
+                <p>&copy; 2025 CGC University, Mohali. All Rights Reserved.</p>
+                <p class="mt-1">Powered by uniRP™</p>
+            </div>
+        </footer>
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const loginForm = document.getElementById('login-form');
+            const loginView = document.getElementById('login-view');
+            const dashboardView = document.getElementById('dashboard-view');
+            const togglePasswordButton = document.getElementById('toggle-password');
+            const passwordInput = document.getElementById('password');
+            const eyeIcon = document.getElementById('eye-icon');
+            const eyeOffIcon = document.getElementById('eye-off-icon');
+            const logoutButton = document.getElementById('logout-button');
+
+            togglePasswordButton.addEventListener('click', () => {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                eyeIcon.classList.toggle('hidden');
+                eyeOffIcon.classList.toggle('hidden');
+            });
+
+            loginForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+                loginView.classList.add('hidden');
+                dashboardView.classList.remove('hidden');
+            });
+
+            logoutButton.addEventListener('click', () => {
+                dashboardView.classList.add('hidden');
+                loginView.classList.remove('hidden');
+                loginForm.reset(); // Reset form fields on logout
+            });
+
+            const dropdowns = document.querySelectorAll('.nav-item-dropdown');
+            const navClickables = document.querySelectorAll('.nav-clickable');
+            const pageContents = document.querySelectorAll('.page-content');
+            const navItemsAndButtons = document.querySelectorAll('.nav-item, .nav-item-button');
+            const searchButton = document.getElementById('search-button');
+            const searchBar = document.getElementById('search-bar');
+
+            searchButton.addEventListener('click', () => {
+                searchBar.classList.toggle('w-0');
+                searchBar.classList.toggle('px-0');
+                searchBar.classList.toggle('w-56');
+                searchBar.classList.toggle('pl-4'); 
+                if (!searchBar.classList.contains('w-0')) {
+                    searchBar.focus();
+                }
+            });
+            
+            document.addEventListener('click', (e) => {
+                if (!searchButton.contains(e.target) && !searchBar.contains(e.target) && !searchBar.classList.contains('w-0')) {
+                    searchBar.classList.add('w-0', 'px-0');
+                    searchBar.classList.remove('w-56', 'pl-4');
+                }
+            });
+
+
+            dropdowns.forEach(dropdown => {
+                dropdown.addEventListener('mouseenter', () => dropdown.querySelector('.dropdown-menu').classList.remove('hidden'));
+                dropdown.addEventListener('mouseleave', () => dropdown.querySelector('.dropdown-menu').classList.add('hidden'));
+            });
+
+            navClickables.forEach(clickable => {
+                clickable.addEventListener('click', e => {
+                    e.preventDefault();
+                    
+                    const targetId = clickable.getAttribute('data-target');
+                    
+                    pageContents.forEach(content => {
+                        content.classList.add('hidden');
+                        content.classList.remove('fade-in');
+                        if (content.id === targetId) {
+                           setTimeout(() => {
+                                content.classList.remove('hidden');
+                                content.classList.add('fade-in');
+                            }, 50);
+                        }
+                    });
+
+                    navItemsAndButtons.forEach(item => item.classList.remove('nav-active'));
+                    
+                    if (clickable.closest('.nav-item-dropdown')) {
+                        clickable.closest('.nav-item-dropdown').querySelector('.nav-item-button').classList.add('nav-active');
+                    } else {
+                        clickable.classList.add('nav-active');
+                    }
+
+                    document.querySelectorAll('.dropdown-menu').forEach(menu => menu.classList.add('hidden'));
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
+
